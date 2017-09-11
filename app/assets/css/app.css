@@ -420,28 +420,8 @@ body, html {
   height: 100%;
   font-family: 'Nunito', sans-serif;
   margin: 0;
-  padding: 0; }
-
-.section, .inner {
-  display: block;
-  position: relative;
-  width: 100%; }
-
-.inner {
-  max-width: 1080px; }
-
-canvas {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
   padding: 0;
-  z-index: 10; }
-  canvas.nocursor {
-    cursor: none; }
+  background: #482583; }
 
 .cards {
   position: relative;
@@ -451,12 +431,12 @@ canvas {
 
 .card {
   position: relative;
-  color: white;
+  color: #482583;
   display: inline-block;
-  margin: 0 16px;
+  margin: 0 3px;
   border-radius: 3px;
-  width: 64px;
-  height: 128px;
+  width: 33px;
+  height: 50px;
   transform-style: preserve-3d;
   -webkit-perspective: 300px; }
   .card .a,
@@ -464,11 +444,11 @@ canvas {
   .card .c {
     position: absolute;
     display: block;
-    width: 64px;
-    height: 64px;
+    width: 33px;
+    height: 25px;
     left: 0;
     top: 0;
-    transform-origin: 50% 100%;
+    transform-origin: 50% 104%;
     -webkit-backface-visibility: visible;
     transform-style: preserve-3d;
     -webkit-perspective: 300px;
@@ -487,7 +467,15 @@ canvas {
       transform-style: preserve-3d;
       transform: rotateX(0deg);
       overflow: hidden;
-      font-size: 64px; }
+      font-size: 33px; }
+    .card .a .front,
+    .card .b .front,
+    .card .c .front {
+      background: linear-gradient(#00ff86, #00cc6b); }
+    .card .a .back,
+    .card .b .back,
+    .card .c .back {
+      background: linear-gradient(#00cc6b, #00ff86); }
     .card .a .front,
     .card .b .front,
     .card .c .front {
@@ -499,7 +487,7 @@ canvas {
         width: 100%;
         height: 100%;
         left: 0;
-        top: 36%; }
+        top: 18%; }
     .card .a .back,
     .card .b .back,
     .card .c .back {
@@ -512,24 +500,7 @@ canvas {
         width: 100%;
         height: 100%;
         left: 0;
-        top: -64%; }
-  .card .a .front {
-    background: linear-gradient(#2ecc71, #25a25a); }
-  .card .a .back {
-    background: linear-gradient(#1e8449, #27ae60); }
-  .card .b .front {
-    background: linear-gradient(#f1c40f, #c29d0b); }
-  .card .b .back {
-    background: linear-gradient(#c87f0a, #f39c12); }
-  .card .c .front {
-    background: linear-gradient(#3498db, #217dbb); }
-  .card .c .back {
-    background: linear-gradient(#20638f, #2980b9); }
-
-.cards .a.transition,
-.cards .b.transition,
-.cards .c.transition {
-  transition: transform 0.3s ease-out; }
+        top: -88%; }
 
 @media screen and (max-width: 767px) {
   /* 	Mobile styles

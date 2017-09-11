@@ -1,29 +1,28 @@
 
-
 'use strict';
 
 /**
- * Smash targets below this line
+ * BEHOLD: THE TICK(L)+ER
  * -----------------------------
+ * HERE WE GO
+ * HERE WE GO
+ * HERE WE GO
  */
+let Ticker = function (el, opts) {
 
-var
-    Vec         = require('./modules/Vec'),
-    Graphics    = require('./modules/Graphics'),
-    $           = require('jquery');
+    var
+        _interval,
+        _timer,
+        _final = false,
+        num = opts.starting_num || 9,
+        target_num = opts.target_num || 0,
+        duration = opts.duration || 3,
+        transition_speed = opts.transition || 0.2, // The speed of each *FWIP*
+        transition_normalised = (transition_speed * 1000) + 25, // from secions to millisectonds (plus 25 for good measure)
 
-(function(win, doc, c) {
-
-    let
-        w = win.innerWidth,
-        h = win.innerHeight,
-
-        now,
-        then = Date.now(),
-        interval = 1000/60,
-        delta,
-
-        num = 8,
+        // We are caching these are strings so we don't have to interpolate the style values every tick
+        top_style = 'transform: translate3d(0, 0, 1px) rotateX(0deg); transition: transform ' + transition_speed + 's ease-out;',
+        bottom_style = 'transform: translate3d(0, 0, 1px) rotateX(-179deg); transition: transform ' + transition_speed + 's ease-out;',
 
         order = [
             ['af', 'bb'],
@@ -31,40 +30,27 @@ var
             ['bf', 'cb']
         ],
 
-        index = 0,
-
         $order = {
             'af': {
-                el: $('.a'),
-                num: $('.a .front .num, .b .back .num')
+                el: el.querySelectorAll('.a'),
+                num: el.querySelectorAll('.a .front .num, .b .back .num')
             },
 
             'cf': {
-                el: $('.c'),
-                num: $('.c .front .num, .a .back .num')
+                el: el.querySelectorAll('.c'),
+                num: el.querySelectorAll('.c .front .num, .a .back .num')
             },
 
             'bf': {
-                el: $('.b'),
-                num: $('.b .front .num, .c .back .num')
+                el: el.querySelectorAll('.b'),
+                num: el.querySelectorAll('.b .front .num, .c .back .num')
             }
         };
 
-    function render() {
-
-        requestAnimationFrame(render);
-        now = Date.now();
-        delta = now - then;
-
-        if (delta > interval) {
-
-            then = now - (delta % interval);
-
-        }
-
-    }
-
     function next() {
+
+        if (_final === true) clearInterval(_interval);
+
         order.push(order.shift());
         num--;
         if ( num === 0 ) num = 9;
@@ -73,32 +59,43 @@ var
 
     function smash () {
 
-        $order[order[0][0]].num.html(num);
-        $order[order[1][0]].num.html(num);
-        $order[order[0][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, 1px) rotateX(0deg); transition: transform 0.3s ease-out;');
-        $order[order[2][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, 1px) rotateX(-179deg); transition: transform 0.3s ease-out;');
+        $order[order[0][0]].num.forEach( (item) => item.innerHTML = (_final ? target_num : num) );
+        $order[order[1][0]].num.forEach( (item) => item.innerHTML = (_final ? target_num : num) );
+        $order[order[0][0]].el[0].setAttribute('style', top_style);
+        $order[order[2][0]].el[0].setAttribute('style', bottom_style);
         $order[order[1][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, -1px) rotateX(-179deg);');
 
         setTimeout( () => {
             $order[order[1][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, -1px) rotateX(1deg);')
-            $order[order[2][0]].num.html(num-1);
-        }, 350);
+            $order[order[2][0]].num.forEach( (item) => item.innerHTML = num-1 );
+        }, transition_normalised);
 
     }
 
-    function init() {
+    (() => {
+        smash();
+        setTimeout(() => {
+            _interval = setInterval(next, transition_normalised + 25);
+        }, opts.delay || 0);
 
-        $(document).on('click', 'button', function(e) {
-            e.preventDefault();
-            $('.cards').toggleClass('rotate-a');
+        setTimeout(() => { _final = true; }, opts.duration);
+    })();
+
+    return this;
+
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.card').forEach( (el, i) => {
+
+        new Ticker(el, {
+            starting_num: 9,
+            duration: 6000,
+            target_num: Number('2004'.split('')[i]),
+            delay: 2000 + Math.random() * 600
         });
 
-        smash();
+    });
+});
 
-        setInterval(next, 800);
-
-    }
-
-    $(init);
-
-})(window,document,document.querySelectorAll('canvas')[0]);
+module.exports = Ticker;

@@ -13,32 +13,7 @@ body, html {
 	font-family: 'Nunito', sans-serif;
 	margin: 0;
 	padding: 0;
-}
-
-.section, .inner {
-    display: block;
-    position: relative;
-    width: 100%;
-}
-
-.inner {
-    max-width: 1080px;
-}
-
-canvas {
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    z-index: 10;
-
-    &.nocursor {
-        cursor: none;
-    }
+    background: #482583;
 }
 
 .cards {
@@ -50,12 +25,12 @@ canvas {
 
 .card {
     position: relative;
-    color: white;
+    color: #482583;
     display: inline-block;
-    margin: 0 16px;
+    margin: 0 3px;
     border-radius: 3px;
-    width: 64px;
-    height: 128px;
+    width: 33px;
+    height: 50px;
     transform-style: preserve-3d;
     -webkit-perspective: 300px;
 
@@ -64,11 +39,11 @@ canvas {
     .c {
         position: absolute;
         display: block;
-        width: 64px;
-        height: 64px;
+        width: 33px;
+        height: 25px;
         left: 0;
         top: 0;
-        transform-origin: 50% 100%;
+        transform-origin: 50% 104%;
         // transition: transform 0.3s ease-out;
         -webkit-backface-visibility: visible;
         transform-style: preserve-3d;
@@ -85,7 +60,15 @@ canvas {
             transform-style: preserve-3d;
             transform: rotateX(0deg);
             overflow: hidden;
-            font-size: 64px;
+            font-size: 33px;
+        }
+
+        .front {
+            background: linear-gradient(#00ff86, darken(#00ff86, 10%));
+        }
+
+        .back {
+            background: linear-gradient(darken(#00ff86, 10%), #00ff86);
         }
 
         .front {
@@ -95,7 +78,7 @@ canvas {
                 width: 100%;
                 height: 100%;
                 left: 0;
-                top: 36%;
+                top: 18%;
             }
         }
 
@@ -106,62 +89,39 @@ canvas {
                 width: 100%;
                 height: 100%;
                 left: 0;
-                top: -64%;
+                top: -88%;
             }
             transform: rotateX(180deg);    
         }
     }
 
-    .a {
-        .front {
-            background: linear-gradient(#2ecc71, darken(#2ecc71, 10%));
-        }
+    // .a {
+    //     .front {
+    //         background: linear-gradient(#2ecc71, darken(#2ecc71, 10%));
+    //     }
 
-        .back {
-            background: linear-gradient(darken(#27ae60, 10%), #27ae60);
-        }
-    }
+    //     .back {
+    //         background: linear-gradient(darken(#27ae60, 10%), #27ae60);
+    //     }
+    // }
 
-    .b {
-        .front {
-            background: linear-gradient(#f1c40f, darken(#f1c40f, 10%));
-        }
+    // .b {
+    //     .front {
+    //         background: linear-gradient(#f1c40f, darken(#f1c40f, 10%));
+    //     }
 
-        .back {
-            background: linear-gradient(darken(#f39c12, 10%), #f39c12);
-        }
-    }
+    //     .back {
+    //         background: linear-gradient(darken(#f39c12, 10%), #f39c12);
+    //     }
+    // }
 
-    .c {
-        .front {
-            background: linear-gradient(#3498db, darken(#3498db, 10%));
-        }
+    // .c {
+    //     .front {
+    //         background: linear-gradient(#3498db, darken(#3498db, 10%));
+    //     }
 
-        .back {
-            background: linear-gradient(darken(#2980b9, 10%), #2980b9);
-        }
-    }
-}
-
-.cards {
-    .a, 
-    .b, 
-    .c {
-
-        &.transition {
-            transition: transform 0.3s ease-out;
-        }
-
-        // &.top {
-        //     transform: translate3d(0, 0, 1px) rotateX(0deg);
-        // }   
-        // &.bottom {
-        //     transform: translate3d(0, 0, 1px) rotateX(-180deg);
-        // }
-        // &.back {
-        //     transform: translate3d(0, 0, -1px) rotateX(1deg);
-        //     transition: transform 0.3s ease-out 0.3s, opacity 0.01s ease-out 0.3s;
-        //     opacity: 0;
-        // }
-    }
+    //     .back {
+    //         background: linear-gradient(darken(#2980b9, 10%), #2980b9);
+    //     }
+    // }
 }
