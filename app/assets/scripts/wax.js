@@ -21,7 +21,38 @@ var Vec = require('./modules/Vec'),
     now = void 0,
         then = Date.now(),
         interval = 1000 / 60,
-        delta = void 0;
+        delta = void 0,
+        num = 8,
+        order = ['af', 'bb', 'cf', 'ab', 'bf', 'cb'],
+        index = 0,
+        $order = {
+        'af': {
+            el: $('.a .front'),
+            num: $('.a .front .num')
+        },
+        'ab': {
+            el: $('.a .back'),
+            num: $('.a .back .num')
+        },
+
+        'bf': {
+            el: $('.b .front'),
+            num: $('.b .front .num')
+        },
+        'bb': {
+            el: $('.b .back'),
+            num: $('.b .back .num')
+        },
+
+        'cf': {
+            el: $('.a .front'),
+            num: $('.a .front .num')
+        },
+        'cb': {
+            el: $('.c .back'),
+            num: $('.c .back .num')
+        }
+    };
 
     function render() {
 
@@ -33,6 +64,15 @@ var Vec = require('./modules/Vec'),
 
             then = now - delta % interval;
         }
+    }
+
+    function next() {}
+
+    function prepare() {
+        $order[order[2]].num = num - 1;
+        $order[order[3]].num = num - 1;
+        order.push(order.pop());
+        order.push(order.pop());
     }
 
     function init() {

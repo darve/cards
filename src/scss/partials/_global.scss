@@ -51,6 +51,8 @@ canvas {
 .card {
     position: relative;
     color: white;
+    display: inline-block;
+    margin: 0 16px;
     border-radius: 3px;
     width: 64px;
     height: 128px;
@@ -70,54 +72,73 @@ canvas {
         transform-origin: 50% 100%;
         transition: transform 0.3s ease-out;
         border-radius: 4px 4px 0px 0px;
-        overflow: hidden;
-
+        backface-visibility: visible;
+        transform-style: preserve-3d;
+        perspective: 300px;
+        text-align: center;
+        
         .front,
         .back {
             display: block;
             position: absolute;
             width: 100%;
             height: 100%;            
-            padding: 22px;
-            // backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            overflow: hidden;
+            font-size: 64px;
         }
 
         .front {
-            transform: translate3d(0, 0, 0) rotateX(0deg);
+            .num {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 36%;
+            }
         }
 
         .back {
-            transform: translate3d(0, 0, 0) rotateX(180deg);    
+            .num {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: -64%;
+            }
+            transform: rotateX(180deg);    
         }
     }
 
     .a {
         .front {
-            background: #2ecc71;
+            background: linear-gradient(#2ecc71, darken(#2ecc71, 10%));
         }
 
         .back {
-            background: #27ae60;
+            background: linear-gradient(darken(#27ae60, 10%), #27ae60);
         }
     }
 
     .b {
         .front {
-            background: #f1c40f;
+            background: linear-gradient(#f1c40f, darken(#f1c40f, 10%));
         }
 
         .back {
-            background: #f39c12;
+            background: linear-gradient(darken(#f39c12, 10%), #f39c12);
         }
     }
 
     .c {
         .front {
-            background: #3498db;
+            background: linear-gradient(#3498db, darken(#3498db, 10%));
         }
 
         .back {
-            background: #2980b9;
+            background: linear-gradient(darken(#2980b9, 10%), #2980b9);
         }
     }
 
@@ -132,21 +153,15 @@ canvas {
 }
 
 .cards {
-    &.show-a {
-        .a {
+    .a, .b, .c {
+        &.top {
             transform: translate3d(0, 0, 1px) rotateX(0deg);
-        }
-        .b {
+        }   
+        &.bottom {
             transform: translate3d(0, 0, 1px) rotateX(180deg);
         }
-        .c {
+        &.back
             transform: translate3d(0, 0, -1px) rotateX(0deg);
-        }
-    }
-
-    &.rotate-a {
-        .a {
-            transform: translate3d(0, 0, 1px) rotateX(-179deg);
         }
     }
 }

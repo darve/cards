@@ -21,7 +21,34 @@ var
         now,
         then = Date.now(),
         interval = 1000/60,
-        delta;
+        delta,
+
+        num = 8,
+
+        order = [
+            'af', 'bb',
+            'cf', 'ab',
+            'bf', 'cb'
+        ],
+
+        index = 0,
+
+        $order = {
+            'af': {
+                el: $('.a'),
+                num: $('.a .front .num, .b .back .num')
+            },
+
+            'cf': {
+                el: $('.c'),
+                num: $('.c .front .num, .a .back .num')
+            },
+
+            'bf': {
+                el: $('.b'),
+                num: $('.b .front .num, .c .back .num')
+            }
+        };
 
     function render() {
 
@@ -35,6 +62,17 @@ var
 
         }
 
+    }
+
+    function next() {
+
+    }
+
+    function prepare () {
+        $order[order[2]].num = num-1;
+        $order[order[3]].num = num-1;
+        order.push(order.pop());
+        order.push(order.pop());
     }
 
     function init() {
