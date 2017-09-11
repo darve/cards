@@ -458,7 +458,7 @@ canvas {
   width: 64px;
   height: 128px;
   transform-style: preserve-3d;
-  perspective: 300px; }
+  -webkit-perspective: 300px; }
   .card .a,
   .card .b,
   .card .c {
@@ -469,12 +469,9 @@ canvas {
     left: 0;
     top: 0;
     transform-origin: 50% 100%;
-    transition: transform 0.3s ease-out;
-    border-radius: 4px 4px 0px 0px;
     -webkit-backface-visibility: visible;
-    backface-visibility: visible;
     transform-style: preserve-3d;
-    perspective: 300px;
+    -webkit-perspective: 300px;
     text-align: center; }
     .card .a .front,
     .card .a .back,
@@ -487,22 +484,26 @@ canvas {
       width: 100%;
       height: 100%;
       -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
       transform-style: preserve-3d;
       transform: rotateX(0deg);
       overflow: hidden;
       font-size: 64px; }
-    .card .a .front .num,
-    .card .b .front .num,
-    .card .c .front .num {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 36%; }
+    .card .a .front,
+    .card .b .front,
+    .card .c .front {
+      border-radius: 4px 4px 0px 0px; }
+      .card .a .front .num,
+      .card .b .front .num,
+      .card .c .front .num {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 36%; }
     .card .a .back,
     .card .b .back,
     .card .c .back {
+      border-radius: 0px 0px 4px 4px;
       transform: rotateX(180deg); }
       .card .a .back .num,
       .card .b .back .num,
@@ -525,15 +526,10 @@ canvas {
   .card .c .back {
     background: linear-gradient(#20638f, #2980b9); }
 
-.cards.top-a {
-  transform: translate3d(0, 0, 1px) rotateX(0deg); }
-  .cards.top-a .b {
-    transform: translate3d(0, 0, 1px) rotateX(180deg); }
-  .cards.top-a .c {
-    transform: translate3d(0, 0, -1px) rotateX(0deg); }
-
-.cards.rotate-a .a {
-  transform: translate3d(0, 0, 1px) rotateX(-179deg); }
+.cards .a.transition,
+.cards .b.transition,
+.cards .c.transition {
+  transition: transform 0.3s ease-out; }
 
 @media screen and (max-width: 767px) {
   /* 	Mobile styles

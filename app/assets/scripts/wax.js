@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
+
 'use strict';
 
 /**
@@ -15,42 +16,27 @@ var Vec = require('./modules/Vec'),
 
     var w = win.innerWidth,
         h = win.innerHeight,
-
-
-    // These are all used for the main rendering loop
-    now = void 0,
+        now = void 0,
         then = Date.now(),
         interval = 1000 / 60,
         delta = void 0,
         num = 8,
-        order = ['af', 'bb', 'cf', 'ab', 'bf', 'cb'],
+        order = [['af', 'bb'], ['cf', 'ab'], ['bf', 'cb']],
         index = 0,
         $order = {
         'af': {
-            el: $('.a .front'),
-            num: $('.a .front .num')
-        },
-        'ab': {
-            el: $('.a .back'),
-            num: $('.a .back .num')
-        },
-
-        'bf': {
-            el: $('.b .front'),
-            num: $('.b .front .num')
-        },
-        'bb': {
-            el: $('.b .back'),
-            num: $('.b .back .num')
+            el: $('.a'),
+            num: $('.a .front .num, .b .back .num')
         },
 
         'cf': {
-            el: $('.a .front'),
-            num: $('.a .front .num')
+            el: $('.c'),
+            num: $('.c .front .num, .a .back .num')
         },
-        'cb': {
-            el: $('.c .back'),
-            num: $('.c .back .num')
+
+        'bf': {
+            el: $('.b'),
+            num: $('.b .front .num, .c .back .num')
         }
     };
 
@@ -66,13 +52,25 @@ var Vec = require('./modules/Vec'),
         }
     }
 
-    function next() {}
+    function next() {
+        order.push(order.shift());
+        num--;
+        if (num === 0) num = 9;
+        requestAnimationFrame(smash);
+    }
 
-    function prepare() {
-        $order[order[2]].num = num - 1;
-        $order[order[3]].num = num - 1;
-        order.push(order.pop());
-        order.push(order.pop());
+    function smash() {
+
+        $order[order[0][0]].num.html(num);
+        $order[order[1][0]].num.html(num);
+        $order[order[0][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, 1px) rotateX(0deg); transition: transform 0.3s ease-out;');
+        $order[order[2][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, 1px) rotateX(-179deg); transition: transform 0.3s ease-out;');
+        $order[order[1][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, -1px) rotateX(-179deg);');
+
+        setTimeout(function () {
+            $order[order[1][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, -1px) rotateX(1deg);');
+            $order[order[2][0]].num.html(num - 1);
+        }, 350);
     }
 
     function init() {
@@ -81,6 +79,10 @@ var Vec = require('./modules/Vec'),
             e.preventDefault();
             $('.cards').toggleClass('rotate-a');
         });
+
+        smash();
+
+        setInterval(next, 800);
     }
 
     $(init);

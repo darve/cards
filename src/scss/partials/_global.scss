@@ -56,9 +56,8 @@ canvas {
     border-radius: 3px;
     width: 64px;
     height: 128px;
-    // background: #bdc3c7;
     transform-style: preserve-3d;
-    perspective: 300px;
+    -webkit-perspective: 300px;
 
     .a,
     .b,
@@ -70,11 +69,10 @@ canvas {
         left: 0;
         top: 0;
         transform-origin: 50% 100%;
-        transition: transform 0.3s ease-out;
-        border-radius: 4px 4px 0px 0px;
-        backface-visibility: visible;
+        // transition: transform 0.3s ease-out;
+        -webkit-backface-visibility: visible;
         transform-style: preserve-3d;
-        perspective: 300px;
+        -webkit-perspective: 300px;
         text-align: center;
         
         .front,
@@ -83,7 +81,7 @@ canvas {
             position: absolute;
             width: 100%;
             height: 100%;            
-            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             transform-style: preserve-3d;
             transform: rotateX(0deg);
             overflow: hidden;
@@ -91,6 +89,7 @@ canvas {
         }
 
         .front {
+            border-radius: 4px 4px 0px 0px;
             .num {
                 position: absolute;
                 width: 100%;
@@ -101,6 +100,7 @@ canvas {
         }
 
         .back {
+            border-radius: 0px 0px 4px 4px;
             .num {
                 position: absolute;
                 width: 100%;
@@ -141,27 +141,27 @@ canvas {
             background: linear-gradient(darken(#2980b9, 10%), #2980b9);
         }
     }
-
-    .top {
-
-    }
-
-    .bottom {
-
-    }
-
 }
 
 .cards {
-    .a, .b, .c {
-        &.top {
-            transform: translate3d(0, 0, 1px) rotateX(0deg);
-        }   
-        &.bottom {
-            transform: translate3d(0, 0, 1px) rotateX(180deg);
+    .a, 
+    .b, 
+    .c {
+
+        &.transition {
+            transition: transform 0.3s ease-out;
         }
-        &.back
-            transform: translate3d(0, 0, -1px) rotateX(0deg);
-        }
+
+        // &.top {
+        //     transform: translate3d(0, 0, 1px) rotateX(0deg);
+        // }   
+        // &.bottom {
+        //     transform: translate3d(0, 0, 1px) rotateX(-180deg);
+        // }
+        // &.back {
+        //     transform: translate3d(0, 0, -1px) rotateX(1deg);
+        //     transition: transform 0.3s ease-out 0.3s, opacity 0.01s ease-out 0.3s;
+        //     opacity: 0;
+        // }
     }
 }

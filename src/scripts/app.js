@@ -1,4 +1,5 @@
 
+
 'use strict';
 
 /**
@@ -17,7 +18,6 @@ var
         w = win.innerWidth,
         h = win.innerHeight,
 
-        // These are all used for the main rendering loop
         now,
         then = Date.now(),
         interval = 1000/60,
@@ -26,9 +26,9 @@ var
         num = 8,
 
         order = [
-            'af', 'bb',
-            'cf', 'ab',
-            'bf', 'cb'
+            ['af', 'bb'],
+            ['cf', 'ab'],
+            ['bf', 'cb']
         ],
 
         index = 0,
@@ -65,14 +65,25 @@ var
     }
 
     function next() {
-
+        order.push(order.shift());
+        num--;
+        if ( num === 0 ) num = 9;
+        requestAnimationFrame(smash);
     }
 
-    function prepare () {
-        $order[order[2]].num = num-1;
-        $order[order[3]].num = num-1;
-        order.push(order.pop());
-        order.push(order.pop());
+    function smash () {
+
+        $order[order[0][0]].num.html(num);
+        $order[order[1][0]].num.html(num);
+        $order[order[0][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, 1px) rotateX(0deg); transition: transform 0.3s ease-out;');
+        $order[order[2][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, 1px) rotateX(-179deg); transition: transform 0.3s ease-out;');
+        $order[order[1][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, -1px) rotateX(-179deg);');
+
+        setTimeout( () => {
+            $order[order[1][0]].el[0].setAttribute('style', 'transform: translate3d(0, 0, -1px) rotateX(1deg);')
+            $order[order[2][0]].num.html(num-1);
+        }, 350);
+
     }
 
     function init() {
@@ -81,6 +92,10 @@ var
             e.preventDefault();
             $('.cards').toggleClass('rotate-a');
         });
+
+        smash();
+
+        setInterval(next, 800);
 
     }
 
